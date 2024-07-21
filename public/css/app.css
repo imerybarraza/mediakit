@@ -80,16 +80,19 @@ footer {
     margin: 10px 0;
 }
 
-.social-login a {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f0f0f0;
-    text-decoration: none;
-    text-align: center;
-    border-radius: 5px;
-}
+.btn-social-login {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f0f0f0;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 5px;
+        color: black; 
+        border: none; 
+        cursor: pointer; 
+    }
 
-.social-login a:hover {
-    background-color: #e0e0e0;
-}
+    .btn-social-login:hover {
+        background-color: #e0e0e0;
+    }    

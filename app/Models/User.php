@@ -14,11 +14,10 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $primaryKey = 'iduser';
-
     public $timestamps = true;
 
    protected $fillable = [
-        'name', 'lastname', 'user', 'password', 'email',
+        'name', 'lastname', 'password', 'email',
     ];
 
    
@@ -31,4 +30,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function socialCounts()
+    {
+        return $this->hasMany(SocialCount::class, 'user_id', 'iduser');
+    }
 }

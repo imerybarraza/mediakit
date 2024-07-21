@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Usuario Uno',
                 'lastname' => 'apellido1',
-                'user' => 'usuario1',
                 'password' => Hash::make('password1'),
                 'email' => 'usuario1@example.com',
                 'created_at' => now(),
@@ -27,7 +26,6 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Usuario Dos',
-                'user' => 'usuario2',
                 'lastname' => 'apellido2',
                 'password' => Hash::make('password2'),
                 'email' => 'usuario2@example.com',
