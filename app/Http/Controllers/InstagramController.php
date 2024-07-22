@@ -1,11 +1,12 @@
 <?php
 
-// app/Http/Controllers/InstagramController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-
+use App\Models\SocialCount;
+use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Log;  
 class InstagramController extends Controller
 {
     public function redirectToInstagramProvider()
@@ -25,7 +26,7 @@ class InstagramController extends Controller
     {
         $http = new Client;
 
-        // Exchange code for access token
+       
         $response = $http->post('https://api.instagram.com/oauth/access_token', [
             'form_params' => [
                 'client_id' => '1469426853657547',
@@ -48,9 +49,28 @@ class InstagramController extends Controller
             ],
         ]);
 
-        $user = json_decode((string) $userResponse->getBody(), true);
+        $userInstagram = json_decode((string) $userResponse->getBody(), true);
 
-      
-        return view('dashboard', compact('user'));
+       // Obtener el usuario autenticado
+       $user = Auth::user();
+
+       if (!$user) {
+           Log::error('Usuario no autenticado.');
+           return response()->json(['error' => 'Usuario no autenticado.'], 401);
+       }
+
+       Log::info('Usuario autenticado instagramcontroller: ' . $user->iduser);
+        // Guardar o actualizar el registro 
+        $socialCount = SocialCount::updateOrCreate(
+            [
+                'user_id' => $user->iduser,
+                'platform' => 'instagram'
+            ],
+            [
+                'social_id' => $userInstagram['id'],
+                'access_token' => $accessToken
+            ]
+        );
+        return view('dashboard', compact('userInstagram'));
     }
 }
