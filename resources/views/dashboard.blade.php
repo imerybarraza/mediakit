@@ -4,23 +4,23 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="column social-login">
                     <h2 class="text-center">Iniciar Sesión</h2>
                     <a href="#" class="btn-social-login">Iniciar Sesión con TikTok</a>
-                    <a href="{{ isset($user) ? '#' : url('/instagram/login') }}" class="btn-social-login">
-                        {{ isset($user) ? 'Conectado a Instagram' : 'Conectar con Instagram' }}
+                    <a href="{{ isset($userInstagram) ? '#' : url('/instagram/login') }}" class="btn-social-login">
+                        {{ isset($userInstagram) ? 'Conectado a Instagram' : 'Conectar con Instagram' }}
                     </a>
                     <h6>Instagram Profile</h6>
-                    @if (isset($user))
+                    @if (isset($userInstagram))
                         <div>
-                            <p><strong>ID de usuario:</strong> {{ $user['id'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Usuario de Instagram:</strong> {{ $user['username'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Tipo de cuenta:</strong> {{ $user['account_type'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Cantidad de Fotos:</strong> {{ $user['media_count'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>ID de usuario:</strong> {{ $userInstagram['id'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Usuario de Instagram:</strong> {{ $userInstagram['username'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Tipo de cuenta:</strong> {{ $userInstagram['account_type'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Cantidad de Fotos:</strong> {{ $userInstagram['media_count'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
                             @if (isset($user['profile_picture_url']))
                                 <p><strong>Profile Picture:</strong></p>
-                                <img src="{{ $user['profile_picture_url'] }}" alt="Profile Picture">
+                                <img src="{{ $userInstagram['profile_picture_url'] }}" alt="Profile Picture">
                             @else
                                 <p>Foto de perfil no disponible</p>
                             @endif
@@ -30,8 +30,6 @@
                     @endif
                     <a href="#" class="btn-social-login">Iniciar Sesión con YouTube</a>
 
-                   
-                  {{-- Botón de Facebook --}}
                   @if(session('facebook_authenticated'))
                         <button class="btn btn-primary" id="facebook-login-btn" disabled>Conectado con Facebook</button>
                     @else
@@ -70,9 +68,9 @@
                             FB.login(function(response) {
                                 if (response.authResponse) {
                                     console.log('Sesión iniciada correctamente con Facebook');
-                                    console.log('Access Token:', response.authResponse.accessToken);
+                                   // console.log('Access Token:', response.authResponse.accessToken);
 
-                                    // Envía el token de acceso al backend para validarlo 
+                                    // Envío el token de acceso al backend para validarlo 
                                     fetch('/auth/facebook', {
                                             method: 'POST',
                                             headers: {
@@ -101,15 +99,13 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="column">
                     <h2 class="text-center">Diseñar Media Kit</h2>
                     <p>Aquí puedes diseñar tu media kit.</p>
 
                 </div>
             </div>
-
-           
         </div>
     </div>
 @endsection
