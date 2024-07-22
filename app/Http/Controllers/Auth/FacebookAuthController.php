@@ -11,6 +11,7 @@ use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class FacebookAuthController extends Controller
 {
@@ -50,13 +51,18 @@ class FacebookAuthController extends Controller
         $appsecret = '40bdb94328996c909018e6024b0b0d7f';
         $appsecretProof = hash_hmac('sha256', $accessToken, $appsecret);
 
-        $response = $this->fb->get('/me?fields=id,name', $accessToken, $appsecretProof);
+    
+        Session::put('facebook_authenticated', true);
+        $response = $this->fb->get('/me?fields=id,name,picture', $accessToken, $appsecretProof);
         $userNode = $response->getGraphUser();
         $facebookId = $userNode->getId();
         $facebookName = $userNode->getName();
+        $facebookPicture = $userNode->getPicture();
 
         Log::info('Facebook ID: ' . $facebookId);
         Log::info('Facebook Name: ' . $facebookName);
+        Log::info('Facebook Picture: ' . $facebookPicture);
+   
 
         $socialCount = SocialCount::updateOrCreate(
             [
@@ -75,7 +81,6 @@ class FacebookAuthController extends Controller
 
        
         //return response()->json(['success' => 'Usuario autenticado correctamente', 'user' => $user->iduser]);
-
    
 }
 }

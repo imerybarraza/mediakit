@@ -11,10 +11,11 @@ class InstagramController extends Controller
     public function redirectToInstagramProvider()
     {
         $query = http_build_query([
-            'client_id' => env('INSTAGRAM_CLIENT_ID'),
-            'redirect_uri' => env('INSTAGRAM_REDIRECT_URI'),
+            'client_id' => '1469426853657547',
+            'redirect_uri' => 'https://mediakit.test/instagram/callback',
             'response_type' => 'code',
             'scope' => 'user_profile,user_media',
+           
         ]);
 
         return redirect('https://api.instagram.com/oauth/authorize?' . $query);
@@ -27,11 +28,11 @@ class InstagramController extends Controller
         // Exchange code for access token
         $response = $http->post('https://api.instagram.com/oauth/access_token', [
             'form_params' => [
-                'client_id' => env('INSTAGRAM_CLIENT_ID'),
-                'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),
+                'client_id' => '1469426853657547',
+                'client_secret' => '8e943c105f998bdc2890759883cfd49e',
                 'code' => $request->code,
                 'grant_type' => 'authorization_code',
-                'redirect_uri' => env('INSTAGRAM_REDIRECT_URI'),
+                'redirect_uri' => 'https://mediakit.test/instagram/callback',
              
             ],
         ]);
