@@ -96,3 +96,36 @@ footer {
     .btn-social-login:hover {
         background-color: #e0e0e0;
     }    
+
+    .btn-facebook {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #4267B2 !important; 
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 350px; 
+        font-size: 16px;
+        text-align: center;
+       
+    }
+    
+    .facebook-profile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .facebook-profile-picture {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+    
+    .facebook-profile-name {
+        font-size: 14px;
+        font-weight: bold;
+    }

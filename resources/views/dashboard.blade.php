@@ -8,19 +8,19 @@
                 <div class="column social-login">
                     <h2 class="text-center">Iniciar Sesión</h2>
                     <a href="#" class="btn-social-login">Iniciar Sesión con TikTok</a>
-                    <a href="{{ isset($userInstagram) ? '#' : url('/instagram/login') }}" class="btn-social-login">
-                        {{ isset($userInstagram) ? 'Conectado a Instagram' : 'Conectar con Instagram' }}
+                    <a href="{{ isset($instagramUser) ? '#' : url('/instagram/login') }}" class="btn-social-login">
+                        {{ isset($instagramUser) ? 'Conectado a Instagram' : 'Conectar con Instagram' }}
                     </a>
                     <h6>Instagram Profile</h6>
-                    @if (isset($userInstagram))
+                    @if (isset($instagramUser))
                         <div>
-                            <p><strong>ID de usuario:</strong> {{ $userInstagram['id'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Usuario de Instagram:</strong> {{ $userInstagram['username'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Tipo de cuenta:</strong> {{ $userInstagram['account_type'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
-                            <p><strong>Cantidad de Fotos:</strong> {{ $userInstagram['media_count'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>ID de usuario:</strong> {{ $instagramData['id'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Usuario de Instagram:</strong> {{ $instagramUser['username'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Tipo de cuenta:</strong> {{ $instagramUser['account_type'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
+                            <p><strong>Cantidad de Fotos:</strong> {{ $instagramUser['media_count'] }} <button class="btn btn-primary btn-sm">Agregar</button></p>
                             @if (isset($user['profile_picture_url']))
                                 <p><strong>Profile Picture:</strong></p>
-                                <img src="{{ $userInstagram['profile_picture_url'] }}" alt="Profile Picture">
+                                <img src="{{ $instagramUser['profile_picture_url'] }}" alt="Profile Picture">
                             @else
                                 <p>Foto de perfil no disponible</p>
                             @endif
@@ -30,8 +30,16 @@
                     @endif
                     <a href="#" class="btn-social-login">Iniciar Sesión con YouTube</a>
 
+                 
                   @if(session('facebook_authenticated'))
-                        <button class="btn btn-primary" id="facebook-login-btn" disabled>Conectado con Facebook</button>
+                        <button class="btn btn-facebook" id="facebook-login-btn" disabled>
+                            <div class="facebook-profile">
+                                @if ($facebookPicture)
+                                    <img src="{{ $facebookPicture }}" alt="Profile Picture" class="facebook-profile-picture">
+                                @endif
+                                <span class="facebook-profile-name">{{ $facebookName }}</span>
+                            </div>
+                        </button>
                     @else
                      <button class="btn-social-login btn btn-primary" id="facebook-login-btn">Iniciar sesión con Facebook</button>
                     @endif

@@ -7,10 +7,17 @@ use GuzzleHttp\Client;
 use App\Models\SocialCount;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Log;  
+use App\Models\InstagramUser;
+
 class InstagramController extends Controller
 {
     public function redirectToInstagramProvider()
+
+  
+
     {
+
+
         $query = http_build_query([
             'client_id' => '1469426853657547',
             'redirect_uri' => 'https://mediakit.test/instagram/callback',
@@ -44,12 +51,12 @@ class InstagramController extends Controller
         // Fetch user data
         $userResponse = $http->get('https://graph.instagram.com/me', [
             'query' => [
-                'fields' => 'id,username,account_type,media_count,media',
-                'access_token' => $accessToken,
+                'fields' => 'id,username,account_type,media_count',
+                'access_token' => $accessToken, 
             ],
         ]);
 
-        $userInstagram = json_decode((string) $userResponse->getBody(), true);
+        $instagramData = json_decode((string) $userResponse->getBody(), true);
 
        // Obtener el usuario autenticado
        $user = Auth::user();
@@ -67,10 +74,23 @@ class InstagramController extends Controller
                 'platform' => 'instagram'
             ],
             [
-                'social_id' => $userInstagram['id'],
+                'social_id' => $instagramData['id'],
                 'access_token' => $accessToken
             ]
         );
-        return view('dashboard', compact('userInstagram'));
+
+          // Guardar o actualizar el registro en instagram_users
+          $instagramUser = InstagramUser::updateOrCreate(
+            [
+                'iduser' => $user->iduser,
+            ],
+            [
+                'username' => $instagramData['username'],
+                'account_type' => $instagramData['account_type'],
+                'media_count' => $instagramData['media_count'],
+            ]
+        );
+
+        return view('dashboard', compact('instagramUser','instagramData'));
     }
 }
