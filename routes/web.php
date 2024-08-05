@@ -16,7 +16,8 @@ Route::get('/instagram/login', [InstagramController::class, 'redirectToInstagram
 Route::get('/instagram/callback', [InstagramController::class, 'handleProviderCallback']);
 
 Route::group(['middleware' => 'checklogin'], function () {
-    Route::get('dashboard', [DashboardController::class, 'dashboard']);
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    
 });
 
 //pag principal

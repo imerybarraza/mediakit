@@ -10,6 +10,7 @@ use App\Models\SocialCount;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
+use App\Models\FacebookUser; 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -57,7 +58,7 @@ class FacebookAuthController extends Controller
         $userNode = $response->getGraphUser();
         $facebookId = $userNode->getId();
         $facebookName = $userNode->getName();
-        $facebookPicture = $userNode->getPicture();
+        $facebookPicture = $userNode->getPicture()->getUrl();
 
         Log::info('Facebook ID: ' . $facebookId);
         Log::info('Facebook Name: ' . $facebookName);
@@ -74,7 +75,17 @@ class FacebookAuthController extends Controller
                 'access_token' => $accessToken
             ]
         );
-
+        // Guardar o actualizar el registro
+        $facebookUser=FacebookUser::updateOrCreate(
+             [
+        'iduser' => $user->iduser,
+         ],
+    [
+       
+        'name' => $facebookName,
+        'profile_picture' => $facebookPicture,
+    ]
+);
         Log::info('Token guardado en la base de datos: ' . $socialCount->id);
 
         return response()->json(['success' => 'Token recibido y guardado correctamente']);
@@ -83,4 +94,5 @@ class FacebookAuthController extends Controller
         //return response()->json(['success' => 'Usuario autenticado correctamente', 'user' => $user->iduser]);
    
 }
+
 }
